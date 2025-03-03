@@ -1,0 +1,32 @@
+<!-- ユーザデータの登録 -->
+<!-- 登録後にトップ画面に繊維 -->
+
+<div>
+  <h2>新規登録</h2>
+</div>
+
+<div>
+    <%= form_tag("/users/createuser") do %>
+
+        <p>ユーザー名</p>
+        <input name="name">
+
+        <p>メールアドレス</p>
+        <input name="mail_address">
+
+        <p>パスワード</p>
+        <input type="password" name="password">
+
+        <p>体重</p>
+        <input name="weight">  
+
+        <p>身長</p>
+        <input name="hight">  
+
+        <input type="submit" value="登録">
+
+    <% end %>
+</div>
+
+<%= button_to "戻る", "/", method: :get, class: "btn" %>
+

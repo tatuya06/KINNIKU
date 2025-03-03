@@ -1,0 +1,26 @@
+<div>
+  <h2>データ登録</h2>
+</div>
+
+<div>
+<%= form_tag("/users/date_reg", method: :post) do %>
+    <p>ベンチプレス</p>
+    <input name="bench_press" placeholder="MAX重量">
+
+    <p>デッドリフト</p>
+    <input name="deadlift" placeholder="MAX重量">
+
+    <p>バーベルスクワット</p>
+    <input name="barbell_squat" placeholder="MAX重量">
+
+    <p>ダンベルアームカール</p>
+    <input name="dumbbell_arm_curl" placeholder="MAX重量">  
+
+    <p>懸垂</p>
+    <input name="pullup" placeholder="MAX回数">  
+
+    <input type="submit" value="登録">
+  <% end %>
+</div>
+
+<%= button_to "戻る", "/users/#{@user.id}/show", method: :get, class: "btn" %>

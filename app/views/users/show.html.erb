@@ -1,0 +1,11 @@
+<div>
+
+      <h2><%= @user.name %></h2>
+      <p><%= @user.mail_address %></p>
+      <p><%= @user.weight %></p>
+      <p><%= @user.hight %></p>
+      
+
+<%= button_to "データ入力", "/users/#{@user.id}/date", method: :get, class: "btn" %>
+
+</div>

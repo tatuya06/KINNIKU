@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: localhost
+  username: postgres
+  password: tatuya06
+  port: 5432
+
+development:
+  <<: *default
+  database: kinniku_development
+
+test:
+  <<: *default
+  database: kinniku_test
+
+production:
+  <<: *default
+  database: kinniku_production
+  username: kinniku
+  password: <%= ENV["KINNIKU_DATABASE_PASSWORD"] %>
