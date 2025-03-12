@@ -1,0 +1,44 @@
+<div>
+  <h2>スケジュール登録</h2>
+</div>
+
+<div>
+  <%= form_with url: "/users/schedule_reg", method: :post, local: true do |f| %>
+    <div>
+      <%= f.label :youbi_kbn, "曜日を選択" %>
+      <%= f.select :youbi_kbn, options_for_select([["月", 1], ["火", 2], ["水", 3], ["木", 4], ["金", 5], ["土", 6], ["日", 7]]), prompt: "曜日を選択してください" %>
+    </div>
+
+    <div>
+    <%= f.label :menu_id, "メニューを選択" %>
+    <% if @menus.present? %>
+      <%= f.collection_select :menu_id, @menus, :id, :menu_name, prompt: "メニューを選択してください" %>
+    <% else %>
+      <p>メニューが登録されていません。</p>
+    <% end %>
+  </div>
+
+    <div>
+      <%= f.label :menu_rep, "レップ数" %>
+      <%= f.number_field :menu_rep %>
+    </div>
+    
+
+    <div>
+      <%= f.label :count, "回数" %>
+      <%= f.number_field :count %>
+    </div>
+
+    <div>
+      <%= f.label :weight, "重量" %>
+      <%= f.number_field :weight %>
+    </div>
+
+    <div>
+      <%= f.submit "登録" %>
+    </div>
+  <% end %>
+</div>
+
+<%= button_to "戻る", "/users/#{@user.id}/show", method: :get, class: "btn" %>
+

@@ -6,6 +6,24 @@
       <p><%= @user.hight %></p>
       
 
-<%= button_to "データ入力", "/users/#{@user.id}/date", method: :get, class: "btn" %>
+<%= button_to "トレーニング結果入力", "/users/#{@user.id}/date", method: :get, class: "btn" %>
+<%= button_to "トレーニングスケジュール入力", "/users/#{@user.id}/schedule", method: :get, class: "btn" %>
+</div>
+
+<div>
+<% if @training_result.present? %>
+  <h1>トレーニング結果</h1>
+  <p>ベンチプレス: <%= @training_result.bench_press %></p>
+  <p>デットリフト: <%= @training_result.deadlift %></p>
+  <p>バーベルスクワット: <%= @training_result.barbell_squat %></p>
+  <p>ダンベルアームカール: <%= @training_result.dumbbell_arm_curl %></p>
+  <p>懸垂: <%= @training_result.pullup %></p>
+  
+  
+<% else %>
+  <p>トレーニング結果が登録されていません</p>
+<% end %>
+
 
 </div>
+

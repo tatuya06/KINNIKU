@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   get "users/:id/edit" => "users#edit"
   post "users/:id/update" => "users#update"
 
+  get "users/:id/schedule" => "users#schedule"
+  post "users/schedule_reg" => "users#schedule_reg"
 
-
-
+  get "users/chart" => "users#chart"
 end

@@ -10,9 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_01_033937) do
+ActiveRecord::Schema[8.0].define(version: 2025_03_09_170223) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "master_menu", primary_key: "menu_id", id: :serial, force: :cascade do |t|
+    t.string "menu_name", limit: 255
+    t.integer "part_kbn"
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+  end
+
+  create_table "master_menus", force: :cascade do |t|
+    t.string "menu_name"
+    t.integer "part_kbn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "schedule", primary_key: "schedule_id", id: :serial, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "youbi_kbn"
+    t.integer "menu_id"
+    t.integer "menu_rep"
+    t.integer "count"
+    t.integer "kg"
+    t.datetime "created_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+    t.datetime "updated_at", precision: nil, default: -> { "CURRENT_TIMESTAMP" }
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "youbi_kbn"
+    t.integer "menu_id"
+    t.integer "menu_rep"
+    t.integer "count"
+    t.integer "weight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "training_results", id: :serial, force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -35,5 +71,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_01_033937) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "schedule", "master_menu", column: "menu_id", primary_key: "menu_id", name: "schedule_menu_id_fkey"
+  add_foreign_key "schedule", "users", name: "schedule_user_id_fkey"
   add_foreign_key "training_results", "users", name: "fk_user", on_delete: :cascade
 end

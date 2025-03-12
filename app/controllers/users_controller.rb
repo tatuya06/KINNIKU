@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_current_user, only: [:new, :edit, :update]
+  before_action :set_current_user, only: [:new, :edit, :update, :schedule, :schedule_reg]
 
 
     def login  
@@ -36,7 +36,19 @@ class UsersController < ApplicationController
 
     def show
       @user = User.find_by(id: params[:id])
-      
+      @training_result = TrainingResult.find_by(user_id: @user.id)
+
+      if @training_result
+        @chart_data = {
+          "ベンチプレス" => @training_result.bench_press,
+          "デッドリフト" => @training_result.deadlift,
+          "バーベルスクワット" => @training_result.barbell_squat,
+          "ダンベルアームカール" => @training_result.dumbbell_arm_curl,
+          "懸垂" => @training_result.pullup
+        }
+      else
+        @chart_data = {}
+      end
     end
   
     def date
@@ -94,9 +106,42 @@ class UsersController < ApplicationController
     end
   end
 
+  def schedule
+    @user = User.find_by(id: params[:id])
+    @menus = MasterMenu.all
+  
+    # @menus が nil または空の場合、エラーメッセージを表示する
+    if @menus.nil? || @menus.empty?
+      flash[:error] = "メニューが登録されていません。"
+    end
+  end
+
+  def schedule_reg
+    @schedule_reg = Schedule.new(
+      user_id: session[:user_id],
+      youbi_kbn: params[:youbi_kbn],
+      menu_id: params[:menu_id],
+      menu_rep: params[:menu_rep],
+      count: params[:count],
+      weight: params[:weight]
+    )
+  
+    if @schedule_reg.save
+      flash[:notice] = "スケジュールを登録しました"
+      redirect_to("/users/#{session[:user_id]}/show")
+    else
+      flash[:error] = "スケジュール登録に失敗しました"
+      flash[:error] += " - " + @schedule_reg.errors.full_messages.to_sentence
+      render("users/schedule")
+    end
+  end
+
+  def chart
+  end
 
   def set_current_user
     @user = User.find_by(id: session[:user_id])
   end
+
 
 end

@@ -28,6 +28,11 @@ body {
     padding: 10px;
   }
 
+  .chart {
+    margin: 20px 0;
+    text-align: center;
+  }  
+
   h2 {
     margin-bottom: 20px;
   }
